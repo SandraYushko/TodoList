@@ -9,6 +9,7 @@ export type TaskType = {
 type TodoListPropsType = {
     title: string
     tasks: TaskType[]
+
 }
 const TodoList = (props: TodoListPropsType) => {
     return (
