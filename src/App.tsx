@@ -5,8 +5,8 @@ import TodoList, {TaskType} from "./TodoList";
 function App() {
     const tasks: TaskType[] = [
         {id: 1, title: "HTML&CSS", isDone: true},
-        {id: 1, title: "JS/ES6/TS", isDone: true},
-        {id: 1, title: "React", isDone: false}
+        {id: 2, title: "JS/ES6/TS", isDone: true},
+        {id: 3, title: "React", isDone: false},
     ]
     return (
         <div className="App">
