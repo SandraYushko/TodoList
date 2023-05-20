@@ -16,36 +16,39 @@ function App() {
             {id: v1(), title: "GraphQL", isDone: false},
         ])
 
+    const changeCheckBox = (taskId: string, newIsDone: boolean) => {
+        setTasks(tasks.map(el=>el.id === taskId ? el.isDone=newIsDone : ""))
+    }
+
     //к нам приходит taskID=task.id, удаляем таску с этим ID
     const removeTask = (taskID: string) => {
         tasks = tasks.filter((task) => task.id !== taskID)
         setTasks(tasks)
     }
 
-    function addTask(title:string) {
+    const addTask = (title: string) => {
         let newTask = {id: v1(), title: title, isDone: false}
-        let newTasks=[newTask, ...tasks]
+        let newTasks = [newTask, ...tasks]
         setTasks(newTasks)
     }
 
     //нажимаем кнопки "all" | "active" | "completed" и удаляем строки
     const [filter, setFilter] = useState<FilterValuesType>("all")
-    let tasksForTodolist:Array<TaskType> = []
-    if (filter==="all"){
-        tasksForTodolist=tasks
+    let tasksForTodolist: Array<TaskType> = []
+    if (filter === "all") {
+        tasksForTodolist = tasks
     }
-    if (filter==="active"){
-        tasksForTodolist=tasks.filter(t=>!t.isDone) //сокращенная запись !t.isDone = (t.isDone === false)
+    if (filter === "active") {
+        tasksForTodolist = tasks.filter(t => !t.isDone) //сокращенная запись !t.isDone = (t.isDone === false)
     }
-    if (filter==="completed"){
-        tasksForTodolist=tasks.filter(t=>t.isDone)  //сокращенная запись t.isDone = (t.isDone === true)
+    if (filter === "completed") {
+        tasksForTodolist = tasks.filter(t => t.isDone)  //сокращенная запись t.isDone = (t.isDone === true)
     }
 
 
     const changeTodolistFilter = (filter: FilterValuesType) => {
         setFilter(filter)
     }
-
 
 
     return (
@@ -56,6 +59,7 @@ function App() {
                 removeTask={removeTask}
                 changeTodolistFilter={changeTodolistFilter}
                 addTask={addTask}
+                changeCheckBox={changeCheckBox}
             />
         </div>
     );

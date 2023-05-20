@@ -13,20 +13,24 @@ type TodoListPropsType = {
     removeTask: (taskID: string) => void
     changeTodolistFilter: (filter: FilterValuesType) => void
     addTask: (title: string) => void
+    changeCheckBox: (taskId:string, newIsDone:boolean) => void
 }
-
 
 const TodoList: React.FC<TodoListPropsType> = ({
                                                    tasks,
                                                    todolistTitle,
                                                    removeTask,
                                                    changeTodolistFilter,
-                                                   addTask
+                                                   addTask,
+                                                   changeCheckBox
                                                }): JSX.Element => {
     const tasksJSX: Array<JSX.Element> = tasks.map((task) => {
+        const changeCheckBoxHandler = (e:ChangeEvent<HTMLInputElement>) => {
+            changeCheckBox(task.id, e.currentTarget.checked)}
+
         return (
             <li key={task.id}>
-                <input type="checkbox" checked={task.isDone}/>
+                <input type="checkbox" checked={task.isDone} onChange={changeCheckBoxHandler}/>
                 <button onClick={() => removeTask(task.id)}>x</button>
                 <span>{task.title}</span>
             </li>
