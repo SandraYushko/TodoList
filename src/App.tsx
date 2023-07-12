@@ -16,8 +16,16 @@ function App() {
             {id: v1(), title: "GraphQL", isDone: false},
         ])
 
-    const changeCheckBox = (taskId: string, newIsDone: boolean) => {
-        setTasks(tasks.map(el=>el.id === taskId ? el.isDone=newIsDone : ""))
+    // изменяем значения чекбоксов при нажатии
+    const changeCheckBox = (taskID: string, newIsDone: boolean) => {
+
+
+
+        /*let currentTask=tasks.find((t)=>t.id===taskID) //находим нужную строку
+        if (currentTask) {
+            currentTask.isDone=newIsDone //заменяем isDone на противоположное значение (=мутируем массив tasks)
+            setTasks([...tasks]) //перезаливаем мутированный массив по новой ссылке (при пом. деструктуризации)
+        }*/
     }
 
     //к нам приходит taskID=task.id, удаляем таску с этим ID

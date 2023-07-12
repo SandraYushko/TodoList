@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {FilterValuesType} from "./App";
+import {FilterValuesType} from './App';
 
 export type TaskType = {
     id: string
@@ -13,7 +13,7 @@ type TodoListPropsType = {
     removeTask: (taskID: string) => void
     changeTodolistFilter: (filter: FilterValuesType) => void
     addTask: (title: string) => void
-    changeCheckBox: (taskId:string, newIsDone:boolean) => void
+    changeCheckBox: (taskID: string, newIsDone: boolean) => void
 }
 
 const TodoList: React.FC<TodoListPropsType> = ({
@@ -25,8 +25,9 @@ const TodoList: React.FC<TodoListPropsType> = ({
                                                    changeCheckBox
                                                }): JSX.Element => {
     const tasksJSX: Array<JSX.Element> = tasks.map((task) => {
-        const changeCheckBoxHandler = (e:ChangeEvent<HTMLInputElement>) => {
-            changeCheckBox(task.id, e.currentTarget.checked)}
+        const changeCheckBoxHandler = (e: ChangeEvent<HTMLInputElement>) => {
+            changeCheckBox(task.id, e.currentTarget.checked)
+        }
 
         return (
             <li key={task.id}>
@@ -37,20 +38,20 @@ const TodoList: React.FC<TodoListPropsType> = ({
         )
     })
 
-    let [title, setTitle] = useState("")
+    let [title, setTitle] = useState('')
     const addTask1 = () => {
         addTask(title)
-        setTitle("")
+        setTitle('')
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     };
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") addTask1()
+        if (e.key === 'Enter') addTask1()
     }
-    const onAllClickHandler = () => changeTodolistFilter("all")
-    const onActiveClickHandler = () => changeTodolistFilter("active")
-    const onCompletedClickHandler = () => changeTodolistFilter("completed")
+    const onAllClickHandler = () => changeTodolistFilter('all')
+    const onActiveClickHandler = () => changeTodolistFilter('active')
+    const onCompletedClickHandler = () => changeTodolistFilter('completed')
 
     return (
         <div>
