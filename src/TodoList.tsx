@@ -40,8 +40,10 @@ const TodoList: React.FC<TodoListPropsType> = ({
 
     let [title, setTitle] = useState('')
     const addTask1 = () => {
-        addTask(title)
-        setTitle('')
+        if (title.trim()) {
+            addTask(title.trim())
+            setTitle('')
+        }
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
