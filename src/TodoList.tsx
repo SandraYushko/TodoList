@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType} from './App';
+import styles from './TodoList.module.css'
 
 export type TaskType = {
     id: string
@@ -14,6 +15,7 @@ type TodoListPropsType = {
     changeTodolistFilter: (filter: FilterValuesType) => void
     addTask: (title: string) => void
     changeCheckBox: (taskID: string, newIsDone: boolean) => void
+    filter: FilterValuesType
 }
 
 const TodoList: React.FC<TodoListPropsType> = ({
@@ -22,7 +24,8 @@ const TodoList: React.FC<TodoListPropsType> = ({
                                                    removeTask,
                                                    changeTodolistFilter,
                                                    addTask,
-                                                   changeCheckBox
+                                                   changeCheckBox,
+                                                   filter
                                                }): JSX.Element => {
     const tasksJSX: Array<JSX.Element> = tasks.map((task) => {
         const changeCheckBoxHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +33,7 @@ const TodoList: React.FC<TodoListPropsType> = ({
         }
 
         return (
-            <li key={task.id}>
+            <li key={task.id} className={task.isDone===true ? styles.isDone : ""}>
                 <input type="checkbox" checked={task.isDone} onChange={changeCheckBoxHandler}/>
                 <button onClick={() => removeTask(task.id)}>x</button>
                 <span>{task.title}</span>
@@ -39,13 +42,17 @@ const TodoList: React.FC<TodoListPropsType> = ({
     })
 
     let [title, setTitle] = useState('')
+    const [error, setError] = useState<string|null>(null)
+
     const addTask1 = () => {
         if (title.trim()) {
             addTask(title.trim())
             setTitle('')
         }
+        else setError("Title is required!")
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setError(null)
         setTitle(e.currentTarget.value)
     };
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -61,19 +68,21 @@ const TodoList: React.FC<TodoListPropsType> = ({
                 <h3>{todolistTitle}</h3>
                 <div>
                     <input
+                        className={error ? styles.error : ""}
                         value={title}
                         onChange={onChangeHandler}
                         onKeyPress={onKeyPressHandler}
                     />
                     <button onClick={addTask1}>+</button>
+                    {error && <div className={styles.errorMessage}>{error}</div>}
                 </div>
                 <ul>
                     {tasksJSX}
                 </ul>
                 <div>
-                    <button onClick={onAllClickHandler}>All</button>
-                    <button onClick={onActiveClickHandler}>Active</button>
-                    <button onClick={onCompletedClickHandler}>Completed</button>
+                    <button className={filter==="all" ? styles.activeFilter : ""} onClick={onAllClickHandler}>All</button>
+                    <button className={filter==="active" ? styles.activeFilter : ""} onClick={onActiveClickHandler}>Active</button>
+                    <button className={filter==="completed" ? styles.activeFilter : ""} onClick={onCompletedClickHandler}>Completed</button>
                 </div>
             </div>
         </div>
