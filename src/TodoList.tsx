@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType} from './App';
 import styles from './TodoList.module.css'
+import CheckBox from './components/CheckBox';
 
 export type TaskType = {
     id: string
@@ -27,14 +28,18 @@ const TodoList: React.FC<TodoListPropsType> = ({
                                                    changeCheckBox,
                                                    filter
                                                }): JSX.Element => {
-    const tasksJSX: Array<JSX.Element> = tasks.map((task) => {
-        const changeCheckBoxHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            changeCheckBox(task.id, e.currentTarget.checked)
-        }
 
+    const changeCheckBoxHandler = (task:string, isDone:boolean) => {
+        changeCheckBox(task, isDone)
+    }
+
+    const tasksJSX: Array<JSX.Element> = tasks.map((task) => {
         return (
             <li key={task.id} className={task.isDone===true ? styles.isDone : ""}>
-                <input type="checkbox" checked={task.isDone} onChange={changeCheckBoxHandler}/>
+                <CheckBox
+                    checked={task.isDone}
+                    callBack={(isDone:boolean)=>{changeCheckBoxHandler(task.id, isDone)}}
+                />
                 <button onClick={() => removeTask(task.id)}>x</button>
                 <span>{task.title}</span>
             </li>
@@ -91,3 +96,33 @@ const TodoList: React.FC<TodoListPropsType> = ({
 
 
 export default TodoList;
+
+
+
+
+
+
+
+// const TodoList: React.FC<TodoListPropsType> = ({
+//                                                    tasks,
+//                                                    todolistTitle,
+//                                                    removeTask,
+//                                                    changeTodolistFilter,
+//                                                    addTask,
+//                                                    changeCheckBox,
+//                                                    filter
+//                                                }): JSX.Element => {
+//
+//     const tasksJSX: Array<JSX.Element> = tasks.map((task) => {
+//         const changeCheckBoxHandler = (e: ChangeEvent<HTMLInputElement>) => {
+//             changeCheckBox(task.id, e.currentTarget.checked)
+//         }
+//
+//         return (
+//             <li key={task.id} className={task.isDone===true ? styles.isDone : ""}>
+//                 <input type="checkbox" checked={task.isDone} onChange={changeCheckBoxHandler}/>
+//                 <button onClick={() => removeTask(task.id)}>x</button>
+//                 <span>{task.title}</span>
+//             </li>
+//         )
+//     })
