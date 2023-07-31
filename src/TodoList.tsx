@@ -10,16 +10,18 @@ export type TaskType = {
 }
 
 type TodoListPropsType = {
+    todolistID:string
     todolistTitle: string
     tasks: TaskType[]
-    removeTask: (taskID: string) => void
-    changeTodolistFilter: (filter: FilterValuesType) => void
+    removeTask: (todolistID:string, taskID: string) => void
+    changeTodolistFilter: (todolistID:string, filter: FilterValuesType) => void
     addTask: (title: string) => void
     changeCheckBox: (taskID: string, newIsDone: boolean) => void
     filter: FilterValuesType
 }
 
 const TodoList: React.FC<TodoListPropsType> = ({
+                                                   todolistID,
                                                    tasks,
                                                    todolistTitle,
                                                    removeTask,
@@ -40,7 +42,7 @@ const TodoList: React.FC<TodoListPropsType> = ({
                     checked={task.isDone}
                     callBack={(isDone:boolean)=>{changeCheckBoxHandler(task.id, isDone)}}
                 />
-                <button onClick={() => removeTask(task.id)}>x</button>
+                <button onClick={() => removeTask(todolistID, task.id)}>x</button>
                 <span>{task.title}</span>
             </li>
         )
@@ -63,9 +65,9 @@ const TodoList: React.FC<TodoListPropsType> = ({
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') addTask1()
     }
-    const onAllClickHandler = () => changeTodolistFilter('all')
-    const onActiveClickHandler = () => changeTodolistFilter('active')
-    const onCompletedClickHandler = () => changeTodolistFilter('completed')
+    const onAllClickHandler = () => changeTodolistFilter(todolistID, 'all')
+    const onActiveClickHandler = () => changeTodolistFilter(todolistID,'active')
+    const onCompletedClickHandler = () => changeTodolistFilter(todolistID,'completed')
 
     return (
         <div>
