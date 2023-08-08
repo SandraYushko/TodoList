@@ -60,6 +60,10 @@ function App() {
     const changeTodolistFilter = (todolistID: string, filter: FilterValuesType) => {
         setTodolists(todolists.map(el => el.id === todolistID ? {...el, filter: filter} : el))
     }
+    const deleteTodolist = (todolistID: string) => {
+        setTodolists(todolists.filter(el=>el.id!==todolistID))
+        delete tasks[todolistID]
+    }
 
     return (
         <div className="App">
@@ -82,6 +86,7 @@ function App() {
                         addTask={addTask}
                         changeCheckBox={changeCheckBox}
                         filter={el.filter}
+                        deleteTodolist={deleteTodolist}
                     />
                 )
             })}

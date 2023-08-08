@@ -18,6 +18,7 @@ type TodoListPropsType = {
     addTask: (todolistID:string, title: string) => void
     changeCheckBox: (todolistID: string, taskID: string, newIsDone: boolean) => void
     filter: FilterValuesType
+    deleteTodolist: (todolistID:string) => void
 }
 
 const TodoList: React.FC<TodoListPropsType> = ({
@@ -28,7 +29,8 @@ const TodoList: React.FC<TodoListPropsType> = ({
                                                    changeTodolistFilter,
                                                    addTask,
                                                    changeCheckBox,
-                                                   filter
+                                                   filter,
+                                                   deleteTodolist
                                                }): JSX.Element => {
 
     const changeCheckBoxHandler = (task:string, isDone:boolean) => {
@@ -68,11 +70,12 @@ const TodoList: React.FC<TodoListPropsType> = ({
     const onAllClickHandler = () => changeTodolistFilter(todolistID, 'all')
     const onActiveClickHandler = () => changeTodolistFilter(todolistID,'active')
     const onCompletedClickHandler = () => changeTodolistFilter(todolistID,'completed')
+    const deleteTodolistHandler = () => {deleteTodolist(todolistID)}
 
     return (
         <div>
             <div className="todolist">
-                <h3>{todolistTitle}</h3>
+                <h3>{todolistTitle}<button onClick={deleteTodolistHandler}>x</button></h3>
                 <div>
                     <input
                         className={error ? styles.error : ""}
