@@ -15,8 +15,8 @@ type TodoListPropsType = {
     tasks: TaskType[]
     removeTask: (todolistID:string, taskID: string) => void
     changeTodolistFilter: (todolistID:string, filter: FilterValuesType) => void
-    addTask: (title: string) => void
-    changeCheckBox: (taskID: string, newIsDone: boolean) => void
+    addTask: (todolistID:string, title: string) => void
+    changeCheckBox: (todolistID: string, taskID: string, newIsDone: boolean) => void
     filter: FilterValuesType
 }
 
@@ -32,7 +32,7 @@ const TodoList: React.FC<TodoListPropsType> = ({
                                                }): JSX.Element => {
 
     const changeCheckBoxHandler = (task:string, isDone:boolean) => {
-        changeCheckBox(task, isDone)
+        changeCheckBox(todolistID, task, isDone)
     }
 
     const tasksJSX: Array<JSX.Element> = tasks.map((task) => {
@@ -53,7 +53,7 @@ const TodoList: React.FC<TodoListPropsType> = ({
 
     const addTask1 = () => {
         if (title.trim()) {
-            addTask(title.trim())
+            addTask(todolistID, title.trim())
             setTitle('')
         }
         else setError("Title is required!")

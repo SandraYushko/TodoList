@@ -10,12 +10,12 @@ export type TodolistsType = {
     filter: FilterValuesType
 }
 export type TaskAssotType = {
-    [key:string]:TaskType[]
+    [key: string]: TaskType[]
 }
 
 function App() {
-    let todolistID1=v1()
-    let todolistID2=v1()
+    let todolistID1 = v1()
+    let todolistID2 = v1()
 
     let [todolists, setTodolists] = useState<Array<TodolistsType>>([
         {id: todolistID1, title: 'What to learn', filter: 'all'},
@@ -41,21 +41,21 @@ function App() {
     )
 
     // изменяем значения чекбоксов при нажатии
-    const changeCheckBox = (taskID: string, newIsDone: boolean) => {
-       /* let currentTask = tasks.find((t) => t.id === taskID) //находим нужную строку
-        if (currentTask) {
-            currentTask.isDone = newIsDone //заменяем isDone на противоположное значение (=мутируем массив tasks)
-            setTasks([...tasks]) //перезаливаем мутированный массив по новой ссылке (при пом. деструктуризации)
-        }*/
+    const changeCheckBox = (todolistID: string, taskID: string, newIsDone: boolean) => {
+        let currentTask = tasks[todolistID].find((t) => t.id === taskID) //находим нужную строку
+         if (currentTask) {
+             currentTask.isDone = newIsDone //заменяем isDone на противоположное значение (=мутируем массив tasks)
+             setTasks({...tasks}) //перезаливаем мутированный массив по новой ссылке (при пом. деструктуризации)
+         }
     }
     //к нам приходит taskID=task.id, удаляем таску с этим ID
-    const removeTask = (todolistID:string, taskID: string) => {
-        setTasks({...tasks, [todolistID]:tasks[todolistID].filter(task => task.id !== taskID)})
+    const removeTask = (todolistID: string, taskID: string) => {
+        setTasks({...tasks, [todolistID]: tasks[todolistID].filter(task => task.id !== taskID)})
     }
-    const addTask = (title: string) => {
-       /* let newTask = {id: v1(), title: title, isDone: false}
-        let newTasks = [newTask, ...tasks]
-        setTasks(newTasks)*/
+    const addTask = (todolistID: string, title: string) => {
+        let newTask = {id: v1(), title: title, isDone: false}
+        let newTasks = [newTask, ...tasks[todolistID]]
+        setTasks({...tasks, [todolistID]: newTasks})
     }
     const changeTodolistFilter = (todolistID: string, filter: FilterValuesType) => {
         setTodolists(todolists.map(el => el.id === todolistID ? {...el, filter: filter} : el))
